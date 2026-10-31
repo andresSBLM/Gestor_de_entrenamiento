@@ -1,6 +1,6 @@
 <?php 
 
-require 'auxiliar.php';
+require '../auxiliar.php';
 
 session_start();
 
@@ -32,18 +32,13 @@ if (!isset($_SESSION['login']))
         comparar_password($password, $confirm_password, $errores);
         $pdo = conectar();
         buscar_usuario($pdo, $email, $errores);
-        if (buscar_admin($pdo, $email, $password)) {
-            $_SESSION ['login'] = $email;
-            mover_a('admin.php');
-        }
-
 
         if (empty($errores)) {
             $_SESSION ['login'] = $email;
-            $password_encriptada = password_hash($password, PASSWORD_DEFAULT);
+            $password_encriptada = password_crip($password);
             $campos = compact('nombre', 'edad', 'peso', 'email', 'password_encriptada');
             insertar_usuario($pdo, $campos);
-            mover_a('inicio.php');
+            mover_a('/inicio.php');
         }
     }
 
@@ -120,6 +115,7 @@ if (!isset($_SESSION['login']))
         </label>
         <button type="submit">Iniciar sesión</button>
     </form>
+    <a href="/entrada/acceder.php">Entrar</a>
 </body>
 </html>
 

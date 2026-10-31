@@ -46,5 +46,6 @@ $filas = buscar_todos_los_usuarios($pdo);
         </form>
         <?php } ?>
     </table>
+    <a href="inicio.php">Volver</a>
 </body>
 </html>

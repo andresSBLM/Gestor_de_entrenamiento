@@ -10,5 +10,5 @@ borrar_usuario($pdo, $email );
 
 $_SESSION = [];
 
-mover_a('index.php');
+mover_a('/entrada/index.php');
 

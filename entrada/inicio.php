@@ -2,8 +2,8 @@
 
 session_start();
 
-require 'auxiliar.php';
-
+require '../auxiliar.php';
+$pdo = conectar();
 cabecera();
 
 ?>
@@ -17,5 +17,9 @@ cabecera();
 </head>
 <body>
     <h1>Panel principal</h1>
+    <?php if ($_SESSION['login'] == obtener_correo_admin($pdo)) {
+        ?> <a href="../admin/admin.php">Acceder como admin</a> <?php
+    } ?>
+    
 </body>
 </html>

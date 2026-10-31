@@ -20,12 +20,13 @@ function cabecera() {
     ?>
     <a href="perfil.php">Perfil</a>
     <a href="actividad.php">Actividad</a>
-    <a href="logout.php">Logout</a>
+    <a href="../logout.php">Logout</a>
     <?php
 }
 
-
-
+function password_crip(string $password) :string {
+    return password_hash($password, PASSWORD_DEFAULT);
+}
 
 
 
@@ -107,15 +108,6 @@ function comparar_password(string $password,  string $confirm_password, array &$
     }
 }
 
-function buscar_admin(PDO $pdo, string $email, string $password):bool {
-    if ($email == "andres@correo.com") {
-        $sent = $pdo->prepare("SELECT password FROM usuarios WHERE email = :email");
-        $sent->execute([':email' => $email]);
-        $hash = $sent->fetchColumn();
-        return $hash !== false && password_verify($password, $hash);
-    } return false;
-}
-
 function buscar_usuario(PDO $pdo, string $email, &$errores):void {
     $sent = $pdo->prepare('SELECT * FROM usuarios WHERE email = :email');
     $sent->execute([':email' => $email]);
@@ -150,6 +142,41 @@ function borrar_usuario(PDO $pdo, string $email)
 
 
 
+
+/*Panel de inicio */
+
+function obtener_correo_admin(PDO $pdo) {
+    $sent = $pdo->prepare("SELECT email FROM usuarios WHERE puesto like 'admin'");
+    $sent->execute();
+    return $sent->fetchColumn();
+}
+
+function buscar_admin(PDO $pdo, string $email, string $password):bool {
+    if ($email == obtener_correo_admin($pdo)) {
+        $sent = $pdo->prepare("SELECT password FROM usuarios WHERE email = :email");
+        $sent->execute([':email' => $email]);
+        $hash = $sent->fetchColumn();
+        return $hash !== false && password_verify($password, $hash);
+    } return false;
+}
+
+/*Panel de acceder */
+
+function comprobar_usuario(PDO $pdo, string $email, string $password): bool {
+    $sent = $pdo->prepare('SELECT password FROM usuarios WHERE email = :email');
+    $sent->execute([':email' => $email]);
+    $hash = $sent->fetchColumn();
+
+    return $hash !== false && password_verify($password, $hash);
+}
+
+
+
+
+
+
+
+
 /*Panel de administración */
 
 function buscar_todos_los_usuarios(PDO $pdo) :array{
@@ -157,3 +184,6 @@ function buscar_todos_los_usuarios(PDO $pdo) :array{
     $sent->execute();
     return $sent->fetchAll();
 }
+
+
+
