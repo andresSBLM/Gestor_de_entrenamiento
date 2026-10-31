@@ -18,7 +18,7 @@ cabecera();
 <body>
     <h1>Panel principal</h1>
     <?php if ($_SESSION['login'] == obtener_correo_admin($pdo)) {
-        ?> <a href="../admin/admin.php">Acceder como admin</a> <?php
+        ?> <a href="../admin/comprobar_admin.php">Acceder como admin</a> <?php
     } ?>
     
 </body>

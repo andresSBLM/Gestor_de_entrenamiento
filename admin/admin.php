@@ -1,6 +1,6 @@
 <?php
 
-require 'auxiliar.php';
+require '../auxiliar.php';
 
 session_start();
 
@@ -46,6 +46,6 @@ $filas = buscar_todos_los_usuarios($pdo);
         </form>
         <?php } ?>
     </table>
-    <a href="inicio.php">Volver</a>
+    <a href="../entrada/inicio.php">Volver</a>
 </body>
 </html>

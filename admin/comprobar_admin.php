@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <form action="comprobar_admin.php" method="post">
         <label>
             Contraseña:
-            <input type="password" name="password" id="password">
+            <input type="password" name="password" id="password"><br>
         </label>
         <button type="submit">Enviar</button>
     </form>

@@ -38,7 +38,7 @@ if (!isset($_SESSION['login']))
             $password_encriptada = password_crip($password);
             $campos = compact('nombre', 'edad', 'peso', 'email', 'password_encriptada');
             insertar_usuario($pdo, $campos);
-            mover_a('/inicio.php');
+            mover_a('/entrada/inicio.php');
         }
     }
 
@@ -52,7 +52,7 @@ if (!isset($_SESSION['login']))
 </head>
 <body>
     <h1>Campo de Registro</h1>
-    <form action="index.php" method="post">
+    <form action="/entrada/index.php" method="post">
         <label>
             Nombre:
             <input type="text" id="nombre" name="nombre" value="<?= hh($nombre) ?>"><br>
