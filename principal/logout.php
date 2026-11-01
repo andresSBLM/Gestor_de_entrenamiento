@@ -2,7 +2,7 @@
 require '../comunes/auxiliar.php';
 session_start();
 
-$email = $_SESSION['login'];
+$email = obtener_email();
 
 $pdo = conectar();
 

@@ -14,6 +14,7 @@ CREATE TABLE categorias (
 CREATE TABLE usuarios(
     id              BIGSERIAL       PRIMARY KEY,
     nombre          VARCHAR(255)    NOT NULL,
+    apellidos       VARCHAR(255)    NOT NULL,
     edad            NUMERIC(3)      NOT NULL,
     peso            NUMERIC(8)      NOT NULL,
     email           VARCHAR(255)    UNIQUE NOT NULL,
@@ -53,15 +54,15 @@ VALUES ('admin'),
        ('usuario'),
        ('usuario_premium');
 
-INSERT INTO usuarios (nombre, edad, peso, email, categoria_id, password)
-VALUES ('Andrés', 20, 70.50, 'andres@donana.com', 1, crypt('1236', gen_salt('bf',12))),
-       ('Andrés', 20, 70.50, 'andres@correo.com', 2, crypt('1236', gen_salt('bf',12))),
-       ('Lucía', 25, 58.20, 'lucia@correo.com', 2, crypt('1236', gen_salt('bf',12))),
-       ('Carlos', 31, 82.40, 'carlos@correo.com', 3, crypt('1236', gen_salt('bf',12))),
-       ('Marta', 28, 61.75, 'marta@correo.com', 3, crypt('1236', gen_salt('bf',12))),
-       ('Javier', 22, 75.00, 'javier@correo.com', 2, crypt('1236', gen_salt('bf',12))),
-       ('Elena', 35, 64.30, 'elena@correo.com', 3, crypt('1236', gen_salt('bf',12))),
-       ('Pablo', 19, 68.90, 'pablo@correo.com', 2, crypt('1236', gen_salt('bf',12)));
+INSERT INTO usuarios (nombre, apellidos, edad, peso, email, categoria_id, password)
+VALUES ('Andrés', 'Jimenez',20, 70.50, 'andres@donana.com', 1, crypt('1236', gen_salt('bf',12))),
+       ('Andrés', 'Jimenez',20, 70.50, 'andres@correo.com', 2, crypt('1236', gen_salt('bf',12))),
+       ('Lucía','Jimenez', 25, 58.20, 'lucia@correo.com', 2, crypt('1236', gen_salt('bf',12))),
+       ('Carlos','Jimenez', 31, 82.40, 'carlos@correo.com', 3, crypt('1236', gen_salt('bf',12))),
+       ('Marta','Jimenez', 28, 61.75, 'marta@correo.com', 3, crypt('1236', gen_salt('bf',12))),
+       ('Javier','Jimenez', 22, 75.00, 'javier@correo.com', 2, crypt('1236', gen_salt('bf',12))),
+       ('Elena', 'Jimenez',35, 64.30, 'elena@correo.com', 3, crypt('1236', gen_salt('bf',12))),
+       ('Pablo', 'Jimenez',19, 68.90, 'pablo@correo.com', 2, crypt('1236', gen_salt('bf',12)));
 
 INSERT INTO ejercicios (nombre)
 VALUES ('ciclismo'),

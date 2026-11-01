@@ -4,7 +4,7 @@ session_start();
 
 require '../comunes/auxiliar.php';
 
-$email = $_POST["email"];
+$email = obtener_post('email');
 
 $pdo = conectar();
 $sent = $pdo->prepare("DELETE FROM usuarios WHERE email = :email");

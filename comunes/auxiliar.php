@@ -20,7 +20,7 @@ function opciones($email):void {
     
     ?>
     <div id="opciones">
-        <a href="../principal/perfil.php">Perfil</a>
+        <a href="../perfil/perfil.php">Perfil</a>
         <a href="../principal/actividad.php">Actividad</a>
         <a href="../entrada/acceder.php">Cambiar de usuario.</a>
         <a href="../entrada/cerrar_sesion.php">Cerrar sesión</a>
@@ -80,7 +80,9 @@ function obtener_actividades_usuario(PDO $pdo, string $id) : array
 }
 
 
-
+function obtener_email() {
+    return $_SESSION['login'];
+}
 
 
 
@@ -112,6 +114,15 @@ function validar_nombre(string $nombre, &$errores) :void
     }
 }
 
+function validar_apellidos(string $apellidos, &$errores) :void
+{
+    if($apellidos == '') {
+        $errores['apellidos'][] = 'El apellido está vacío.';
+    } elseif (mb_strlen($apellidos) >= 255) {
+        $errores['apellidos'][] = 'El apellido es demasiado largo.';
+    }
+}
+
 function validar_edad(string $edad, &$errores) :void
 {
     if($edad == '') {
@@ -123,18 +134,19 @@ function validar_edad(string $edad, &$errores) :void
     }
 }
 
-function convertir_peso(string &$peso, string $unidad_peso, array &$errores) :void
+function convertir_peso(string $peso, &$peso_nuevo, string $unidad_peso, array &$errores) :void
 {
     if($peso == '') {
         $errores['peso'][] = 'El peso está vacío';
-    } elseif (!filter_var($peso, FILTER_VALIDATE_INT)) {
+    } elseif (!filter_var($peso, FILTER_VALIDATE_FLOAT)) {
         $errores['peso'][] = 'El peso debe de ser un número entero o decimal';
     }  elseif (($peso >= 500 && $unidad_peso == 'kg') || ($peso <= 5 && $unidad_peso == 'kg')) {
         $errores['peso'][] = 'El peso no entra en el rango humano';
     } elseif (($peso >= 500000 && $unidad_peso == 'g') || ($peso <= 5000 && $unidad_peso == 'g')) {
         $errores['peso'][] = 'El peso no entra en el rango humano';
-    } elseif ($unidad_peso == 'Kg') {
-        $peso *= 1000;
+    }
+    if ($unidad_peso == 'kg') {
+        $peso_nuevo *= 1000;
     }
 }
 
@@ -169,18 +181,19 @@ function buscar_usuario(PDO $pdo, string $email, &$errores):void {
     $sent = $pdo->prepare('SELECT * FROM usuarios WHERE email = :email');
     $sent->execute([':email' => $email]);
     if ($sent->rowCount() > 0) {
-        $errores['confirm_password'][] = 'El usuario ya está registrado.';
+        $errores['confirm_password'][] = 'Correo electrónico o contraseña incorrecta.';
     }
 }
 
 function insertar_usuario(PDO $pdo, array $campos): void {
     extract($campos);
-    $sent = $pdo->prepare('INSERT INTO usuarios (nombre, edad, peso, email, password ) 
-                          VALUES (:nombre, :edad, :peso , :email, :password)');
+    $sent = $pdo->prepare('INSERT INTO usuarios (nombre, apellidos, edad, peso, email, password ) 
+                          VALUES (:nombre, :apellidos, :edad, :peso , :email, :password)');
     $sent->execute([
         ':nombre' => $nombre,
+        ':apellidos' => $apellidos,
         ':edad' => $edad,
-        ':peso' => $peso,
+        ':peso' => $peso_nuevo,
         ':email' => $email,
         ':password' => $password_encriptada
     ]);
@@ -239,6 +252,44 @@ function obtener_ejercicios_usuario(PDO $pdo, int $id): array {
 
 
 
+
+
+
+
+
+
+/* Panel de Perfil */
+
+
+function datos_usuario(PDO $pdo, string $email):array {
+    $sent = $pdo->prepare('
+    SELECT 
+        u.nombre as nombre,
+        u.apellidos as apellidos,
+        u.edad as edad,
+        u.peso as peso,
+        u.email as email,
+        c.categoria as categoria
+    FROM usuarios u join categorias c on u.categoria_id = c.id
+    WHERE u.email = :email');
+    $sent->execute([':email'=> $email]);
+    return $sent->fetch();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*Panel de acceder */
 
 function comprobar_usuario(PDO $pdo, string $email, string $password): bool {
@@ -263,6 +314,9 @@ function buscar_todos_los_usuarios(PDO $pdo) :array{
     $sent->execute();
     return $sent->fetchAll();
 }
+
+
+
 
 
 

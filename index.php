@@ -9,6 +9,7 @@ if (!isset($_SESSION['login']))
 {
     $errores = [];
     $nombre = '';
+    $apellidos = '';
     $edad = '';
     $peso = '';
     $email = '';
@@ -17,6 +18,7 @@ if (!isset($_SESSION['login']))
     if ($_SERVER['REQUEST_METHOD'] === 'POST') 
     {
         $nombre = obtener_post('nombre');
+        $apellidos = obtener_post('apellidos');
         $edad = obtener_post('edad');
         $peso = obtener_post('peso');
         $unidad_peso = obtener_post('unidad_peso');
@@ -25,8 +27,10 @@ if (!isset($_SESSION['login']))
         $confirm_password = obtener_post('confirm_password');
 
         validar_nombre($nombre, $errores);
+        validar_apellidos($apellidos, $errores);
         validar_edad($edad, $errores);
-        convertir_peso($peso, $unidad_peso, $errores);
+        $peso_nuevo = $peso;
+        convertir_peso($peso, $peso_nuevo, $unidad_peso, $errores);
         validar_email($email, $errores);
         validar_password($password, $errores);
         comparar_password($password, $confirm_password, $errores);
@@ -36,7 +40,7 @@ if (!isset($_SESSION['login']))
         if (empty($errores)) {
             $_SESSION ['login'] = $email;
             $password_encriptada = password_crip($password);
-            $campos = compact('nombre', 'edad', 'peso', 'email', 'password_encriptada');
+            $campos = compact('nombre', 'apellidos', 'edad', 'peso_nuevo', 'email', 'password_encriptada');
             insertar_usuario($pdo, $campos);
             mover_a('../principal/inicio.php');
         }
@@ -64,6 +68,16 @@ if (!isset($_SESSION['login']))
             </ul>
         </label>
         <label>
+            Apellidos:
+            <input type="text" id="apellidos" name="apellidos" value="<?= hh($apellidos) ?>"><br>
+            <ul>
+
+                <?php foreach ($errores['apellidos'] ?? [] as $error) {
+                    ?><li><?=$error?></li><?php
+                }?>
+            </ul>
+        </label>
+        <label>
             Edad:
             <input type="number" id="edad" name="edad" value="<?= hh($edad) ?>"><br>
             <ul>
@@ -74,7 +88,7 @@ if (!isset($_SESSION['login']))
         </label>
         <label>
             Peso:
-            <input type="number" id="peso" name="peso" value="<?= hh($peso) ?>">
+            <input type="number" id="peso" step="0.01" name="peso" value="<?= hh($peso) ?>">
             <select name="unidad_peso" id="unidad_peso">
                 <option value="kg">Kilogramos</option>
                 <option value="g">Gramos</option>

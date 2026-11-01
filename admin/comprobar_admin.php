@@ -6,8 +6,8 @@ session_start();
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $password = $_POST['password'];
-    $email = $_SESSION['login'];
+    $password = obtener_post('password');
+    $email = obtener_email();
     if (buscar_admin($pdo, $email, $password)) {
         mover_a('admin.php');
     }

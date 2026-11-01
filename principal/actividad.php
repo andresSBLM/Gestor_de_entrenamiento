@@ -4,7 +4,7 @@ session_start();
 
 require '../comunes/auxiliar.php';
 $pdo = conectar();
-$email = $_SESSION['login'];
+$email = obtener_email();
 $id = obtener_id_usuario($pdo, $email);
 
 $filas = obtener_actividades_usuario($pdo, $id);
@@ -20,6 +20,7 @@ $filas = obtener_actividades_usuario($pdo, $id);
 <body id="body_actividad">
     <header id="cabecera_actividad"></header>
     <main id="principal_actividad">
+        <?php if (!empty($filas)): ?>
         <table>
             <thead>
                 <tr>
@@ -40,6 +41,9 @@ $filas = obtener_actividades_usuario($pdo, $id);
             </tr>
             <?php } ?>
         </table>
+        <?php else : ?>
+            <h2>No hay actividades registradas de este usuario.</h2>
+        <?php endif; ?>
         <a href="inicio.php">Volver</a>
     </main>
 </body>

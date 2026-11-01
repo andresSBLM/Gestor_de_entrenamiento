@@ -9,7 +9,7 @@ opciones($_SESSION['login']);
 comprobar_sesion();
 
 $pdo = conectar();
-$email = $_SESSION['login'];
+$email = obtener_email();
 $id = obtener_id_usuario($pdo, $email);
 $ejercicios = obtener_ejercicios_usuario($pdo, $id);
 $actividades = obtener_actividades_usuario($pdo, $id);
