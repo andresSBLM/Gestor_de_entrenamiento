@@ -29,7 +29,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    min-width: 1500px;
+    min-width: 1000px;
 }
 
 
@@ -49,6 +49,7 @@ ESTILOS PARA ZONA DE INICIO
 #opciones {
     display: flex;
     position: fixed;
+    min-width: 100%;
     bottom: 0;
     gap: 20px;
     left: 50%;
@@ -110,6 +111,7 @@ ESTILOS PARA ZONA DE INICIO
 #principal_inicio {
     display: flex;
     min-height: 100vh;
+    gap: 20px;
 }
 
 #principal_inicio section {
@@ -132,17 +134,26 @@ ESTILOS PARA ZONA DE INICIO
 #principal_inicio > :nth-child(1), #principal_inicio > :nth-child(3) {
     flex: 1 1 auto;
     text-align: center;
-    margin: 20px;
 }
 
 #principal_inicio > :nth-child(2) {
     flex: 2 1 auto;
     text-align: center;
-    margin: 20px;
 }
 
 
 /* Ejercicios que ha realizado un usuario */
+
+#ejercicios_inicio h2 {
+    padding-bottom: 20px;
+}
+#principal_inicio section .mensaje {
+    background-color: rgba(255, 255, 255, 0.74);
+    padding: 20px;
+    width: fit-content;
+    border-radius: 10px;
+    margin: auto;
+}
 
 #contenedor_ejercicios_inicio {
     display: flex;
@@ -253,6 +264,13 @@ ESTILOS PARA ZONA DE INICIO
 .actividad_inicio tbody tr {
     display: flex;
     justify-content: space-between;
+}
+
+
+/*Section de evolución */
+
+#evolucion_inicio h2 {
+    padding-bottom: 20px;
 }
 
 
