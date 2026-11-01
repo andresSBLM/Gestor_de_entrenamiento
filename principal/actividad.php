@@ -8,7 +8,6 @@ $email = $_SESSION['login'];
 $id = obtener_id_usuario($pdo, $email);
 
 $filas = obtener_actividades_usuario($pdo, $id);
-
 ?>
 
 <!DOCTYPE html>
@@ -25,6 +24,7 @@ $filas = obtener_actividades_usuario($pdo, $id);
             <thead>
                 <tr>
                     <th>Usuario</th>
+                    <th>Titulo</th>
                     <th>Ejercicio</th>
                     <th>Fecha</th>
                     <th>Calorias</th>
@@ -33,6 +33,7 @@ $filas = obtener_actividades_usuario($pdo, $id);
             <?php foreach ($filas as $fila) { ?>
             <tr>
                 <td><?= hh($fila['nombre']) ?></td>
+                <td><?= hh($fila['titulo']) ?></td>
                 <td><?= hh($fila['ejercicio']) ?></td>
                 <td><?= hh($fila['fecha']) ?></td>
                 <td><?= hh($fila['calorias']) ?></td>

@@ -9,21 +9,42 @@
     --color-h1-inicio: repeating-conic-gradient(rgb(0, 0, 0) 0 90deg, rgb(255, 255, 254) 90deg 180deg);
     --color-h2-inicio: rgb(255, 255, 255);
     --color-ejercicio-inicio: rgb(139, 113, 33);
+    --color-opciones-inicio: #060606;
+    --color-a-inicio: rgb(255, 255, 255);
+    --color-th-actividad-inicio: white;
+    --color-td-actividad-inicio: rgb(136, 96, 31);
 
     --fondo-opciones: linear-gradient(to top, #3838379e, #dad7d18c );
     --fondo-body-inicio: repeating-linear-gradient(to bottom, #8e763a 80px, #f5d994 160px);
     --fondo-section-inicio: linear-gradient(to top, #cddb74ba , #dee3ceb4 );
     --fondo-ejercicio-inicio: linear-gradient(to top, #9ca752c1 , #dee3ced4 );
+    --fondo-a-inicio: rgb(19, 189, 19);
+    --fondo-a-eliminar-inicio: rgb(189, 19, 19);
+    --fondo-opciones-inicio: linear-gradient(to top, #3838379e, #dad7d18c );
+    --fondo-th-actividad-inicio: yellow;
+    --fondo-td-actividad-inicio: rgb(225, 225, 138);
 }
 
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    min-width: 1500px;
 }
 
 
-/* Estilos para la zona de inicio */
+
+
+
+
+/*
+---------------------------------------------
+ESTILOS PARA ZONA DE INICIO
+--------------------------------------------
+*/
+
+/*Botones de opciones */
+
 
 #opciones {
     display: flex;
@@ -36,12 +57,13 @@ body {
     padding: 20px;
     width: 100%;
     text-align: center;
+    z-index: 2;
 }
 
 #opciones a {
     text-decoration: none;
-    color: #54d50f;
-    background-color: #1a1a1a;
+    color: var(--color-opciones-inicio);
+    background: var(--fondo-opciones-inicio);
     font-weight: bold;
     padding: 20px;
     font-size: 1.25rem;
@@ -60,10 +82,14 @@ body {
     text-shadow: 4px 4px 3px rgb(97, 97, 97);
 }
 
+/*Cuerpo de la zona inicio */
+
 #body_inicio {
     background: var(--fondo-body-inicio);
     min-height: 100vh;
 }
+
+/*cabecera de la zona inicio */
 
 #cabecera_inicio h1 {
     margin: auto;
@@ -79,9 +105,11 @@ body {
 }
 
 
+/* Zona main de la zona inicio */
+
 #principal_inicio {
     display: flex;
-    height: 100vh;
+    min-height: 100vh;
 }
 
 #principal_inicio section {
@@ -113,15 +141,21 @@ body {
     margin: 20px;
 }
 
+
+/* Ejercicios que ha realizado un usuario */
+
 #contenedor_ejercicios_inicio {
     display: flex;
     gap: 20px;
     padding: 20px;
     flex-direction: column;
     margin-top: 20px;
+    padding-bottom: 260px;
 }
 
-#ejercicio_inicio {
+
+
+.ejercicio_inicio {
     background: var(--fondo-ejercicio-inicio);
     border: 2px solid var(--color-bordes);
     font-size: 1.20rem;
@@ -131,9 +165,71 @@ body {
 }
 
 
-#ejercicio_inicio h3 {
+.ejercicio_inicio h3 {
     font-size: 1.5rem;
     font-weight: bold;
 }
 
+
+/* Botones de opciones de los sections */
+
+#ejercicios_inicio, #actividades_recientes_inicio, #evolucion_inicio {
+    position: relative;
+}
+
+#principal_inicio section .anadir {
+    position: absolute;
+    bottom: 90px;
+    right: 20px;
+    font-size: 4rem;
+    color: var(--color-a-inicio);
+    cursor: pointer;
+    background: var(--fondo-a-inicio);
+    padding: 2rem 3rem 2rem 3rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0),
+                inset 0px 100px 40px rgba(238, 255, 0, 0.492),
+                inset 0px -100px 20px rgba(86, 97, 5, 0.282);
+    border-radius: 100%;
+    text-decoration: none;
+}
+
+#principal_inicio section .eliminar {
+    position: absolute;
+    bottom: 90px;
+    left: 20px;
+    font-size: 4rem;
+    color: var(--color-a-inicio);
+    cursor: pointer;
+    background: var(--fondo-a-eliminar-inicio);
+    padding: 1rem 3rem 1rem 3rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0),
+                inset 0px 100px 40px rgba(238, 255, 0, 0.492),
+                inset 0px -100px 20px rgba(86, 97, 5, 0.282);
+    border-radius: 50%;
+    text-decoration: none;
+}
+
+
+/* Ultimas actividades realizadas por un usuario */
+
+
+/*Padre de las fichas de actividades*/
+#contenedor_actividades {
+    display: flex;
+    flex-direction: column;
+}
+
+/*Ficha de actividad */
+.actividad_inicio th{
+    color: var(--color-th-actividad-inicio);
+    background-color: var(--fondo-th-actividad-inicio);
+}
+
+
+
+/*
+---------------------------------------------
+FIN DE ZONA DE ESTILOS DE INICIO
+--------------------------------------------
+*/
 

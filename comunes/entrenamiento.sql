@@ -29,6 +29,7 @@ CREATE TABLE ejercicios(
 
 CREATE TABLE practicas(
     id              BIGSERIAL       PRIMARY KEY,
+    titulo          VARCHAR(255)    NOT NULL DEFAULT 'Actividad',
     fecha           DATE            NOT NULL DEFAULT CURRENT_DATE,
     calorias        INTEGER         NOT NULL,      
     usuario_id      BIGINT          NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
@@ -66,8 +67,7 @@ INSERT INTO ejercicios (nombre)
 VALUES ('ciclismo'),
        ('atletismo'),
        ('natacion'),
-       ('pesas'),
-       ('yoga');
+       ('pesas');
 
 INSERT INTO practicas (fecha, calorias, usuario_id, ejercicio_id)
 VALUES (DEFAULT,      450, 2, 1),
@@ -77,7 +77,7 @@ VALUES (DEFAULT,      450, 2, 1),
        ('2026-10-22', 300, 2, 2),
        ('2026-10-22', 410, 4, 3),
        ('2026-10-23', 600, 5, 1),
-       ('2026-10-24', 250, 6, 5),
+       ('2026-10-24', 250, 6, 4),
        ('2026-10-25', 350, 3, 4),
        ('2026-10-26', 480, 1, 2),
        ('2026-10-27', 700, 7, 1),
@@ -86,7 +86,11 @@ VALUES (DEFAULT,      450, 2, 1),
        ('2026-10-30', 290, 2, 4),
        ('2026-10-30', 460, 5, 2),
        ('2026-10-31', 620, 6, 1),
-       ('2026-10-31', 390, 7, 4);
+       ('2026-10-31', 390, 7, 4),
+       ('2026-11-01', 510, 2, 2),
+       ('2026-11-02', 430, 2, 2),
+       ('2026-11-03', 580, 2, 1)       
+       ;
 
 INSERT INTO ciclismo (distancia, tiempo, velocidad, practica_id)
 VALUES (25, 60,   25, 1),

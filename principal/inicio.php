@@ -12,6 +12,7 @@ $pdo = conectar();
 $email = $_SESSION['login'];
 $id = obtener_id_usuario($pdo, $email);
 $ejercicios = obtener_ejercicios_usuario($pdo, $id);
+$ultimas_actividades = obtener_ultimas_actividades_usuario($pdo, $id);
 
 ?>
 
@@ -37,17 +38,40 @@ $ejercicios = obtener_ejercicios_usuario($pdo, $id);
                 <div id="contenedor_ejercicios_inicio">
                     <?php
                     foreach ($ejercicios as $ejercicio) { ?>
-                    <div id="ejercicio_inicio">
+                    <div class="ejercicio_inicio">
                         <h3><?= hh($ejercicio['ejercicio']) ?></h3>
                     </div>
                     <?php } ?>
                 </div>
             </section>
-            <section id="subir_actividad_inicio">  
-                <h2>Subir actividad</h2>
+            <section id="actividades_recientes_inicio">  
+                <h2>Actividades recientes</h2>
+                <h3>Actividades más recientes</h3>
+                <div id="contenedor_actividades">
+                <?php foreach ($ultimas_actividades as $a) { ?>
+                <table class="actividad_inicio">
+                    <thead>
+                        <tr>
+                            <th colspan="3"><?= hh($a['titulo']) ?></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><?= hh($a['ejercicio']) ?></td>
+                            <td><?= hh($a['fecha']) ?></td>
+                            <td><?= hh($a['calorias']) ?></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <?php } ?>
+                </div>
+                <h3>Subir actividad</h3>
+                <a href="actividades/subir_actividad.php" class="anadir">+</a>
+                <a href="actividades/eliminar_actividad.php" class="eliminar">-</a>
             </section>
             <section id="evolucion_inicio">
                 <h2>Evolución</h2>
+                <a href="evolucion/ver_evolucion.php" class="anadir">?</a>
             </section>
             <?php } ?>
     </main>

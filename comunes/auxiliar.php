@@ -192,17 +192,35 @@ function buscar_admin(PDO $pdo, string $email, string $password):bool {
 
 function obtener_ejercicios_usuario(PDO $pdo, int $id): array {
     $sent = $pdo->prepare('
-        SELECT e.nombre AS ejercicio
+        SELECT DISTINCT e.nombre AS ejercicio
         FROM practicas p
         JOIN ejercicios e    ON e.id = p.ejercicio_id
         LEFT JOIN ciclismo c ON c.practica_id = p.id
         WHERE p.usuario_id = :id
-        ORDER BY p.fecha DESC
+        ORDER BY e.nombre
     ');
     $sent->execute([':id' => $id]);
     return $sent->fetchAll();
 }
 
+
+function obtener_ultimas_actividades_usuario(PDO $pdo, int $id): array {
+    $sent = $pdo->prepare('
+        SELECT 
+            p.titulo AS titulo,
+            e.nombre AS ejercicio, 
+            p.fecha AS fecha,
+            p.calorias AS calorias
+        FROM usuarios u
+        JOIN practicas p ON p.usuario_id = u.id 
+        JOIN ejercicios e ON e.id = p.ejercicio_id
+        WHERE u.id = :id
+        ORDER BY p.fecha DESC
+        LIMIT 5
+    ');
+    $sent->execute([':id' => $id]);
+    return $sent->fetchAll();
+}
 
 
 
@@ -218,6 +236,7 @@ function obtener_actividades_usuario(PDO $pdo, string $id) : array
     $sent = $pdo->prepare('
     SELECT 
     u.nombre as nombre,
+    p.titulo as titulo,
     e.nombre as ejercicio, 
     p.fecha as fecha,
     p.calorias as calorias
