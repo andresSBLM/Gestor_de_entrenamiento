@@ -35,7 +35,21 @@ function password_crip(string $password) :string {
     return password_hash($password, PASSWORD_DEFAULT);
 }
 
+function comprobar_sesion() :void {
 
+    if (!isset($_SESSION['login'])) {
+        mover_a('../index.php');
+    }
+
+    $sent = conectar()->prepare('SELECT 1 FROM usuarios WHERE email = :email');
+    $sent->execute([':email' => $_SESSION['login']]);
+
+    if (!$sent->fetchColumn()) {
+        $_SESSION = [];
+        session_destroy();
+        mover_a('../index.php');
+    }
+}
 
 
 
@@ -79,9 +93,9 @@ function convertir_peso(string &$peso, string $unidad_peso, array &$errores) :vo
         $errores['peso'][] = 'El peso está vacío';
     } elseif (!filter_var($peso, FILTER_VALIDATE_INT)) {
         $errores['peso'][] = 'El peso debe de ser un número entero o decimal';
-    }  elseif (($peso >= 500 && $unidad_peso == 'kg') || $peso <= 0) {
+    }  elseif (($peso >= 500 && $unidad_peso == 'kg') || ($peso <= 5 && $unidad_peso == 'kg')) {
         $errores['peso'][] = 'El peso no entra en el rango humano';
-    } elseif ($peso >= 500000 && $unidad_peso == 'g') {
+    } elseif (($peso >= 500000 && $unidad_peso == 'g') || ($peso <= 5000 && $unidad_peso == 'g')) {
         $errores['peso'][] = 'El peso no entra en el rango humano';
     } elseif ($unidad_peso == 'Kg') {
         $peso *= 1000;

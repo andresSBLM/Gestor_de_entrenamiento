@@ -2,7 +2,7 @@
 
 session_start();
 
-require 'auxiliar.php';
+require '../comunes/auxiliar.php';
 
 $email = $_POST["email"];
 

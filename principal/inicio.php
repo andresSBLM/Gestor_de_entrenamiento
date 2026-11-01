@@ -6,6 +6,8 @@ require '../comunes/auxiliar.php';
 $pdo = conectar();
 cabecera($_SESSION['login']);
 
+comprobar_sesion();
+
 ?>
 
 <!DOCTYPE html>

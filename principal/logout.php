@@ -9,6 +9,7 @@ $pdo = conectar();
 borrar_usuario($pdo, $email );
 
 $_SESSION = [];
+session_destroy();
 
 mover_a('../index.php');
 
