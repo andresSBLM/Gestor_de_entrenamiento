@@ -23,6 +23,7 @@ function opciones($email):void {
         <a href="../principal/perfil.php">Perfil</a>
         <a href="../principal/actividad.php">Actividad</a>
         <a href="../entrada/acceder.php">Cambiar de usuario.</a>
+        <a href="../entrada/cerrar_sesion.php">Cerrar sesión</a>
     <?php
     if ($email !== obtener_correo_admin(conectar())) {
     ?>

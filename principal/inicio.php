@@ -45,10 +45,13 @@ $ultimas_actividades = obtener_ultimas_actividades_usuario($pdo, $id);
                 </div>
             </section>
             <section id="actividades_recientes_inicio">  
-                <h2>Actividades recientes</h2>
-                <h3>Actividades más recientes</h3>
+                <h2>Actividades más recientes</h2>
                 <div id="contenedor_actividades">
-                <?php foreach ($ultimas_actividades as $a) { ?>
+                <?php 
+                if (empty($ultimas_actividades)) {
+                    ?> <h3>No hay Actividades registradas</h3>
+                <?php } else {
+                foreach ($ultimas_actividades as $a) : ?>
                 <table class="actividad_inicio">
                     <thead>
                         <tr>
@@ -59,11 +62,11 @@ $ultimas_actividades = obtener_ultimas_actividades_usuario($pdo, $id);
                         <tr>
                             <td><?= hh($a['ejercicio']) ?></td>
                             <td><?= hh($a['fecha']) ?></td>
-                            <td><?= hh($a['calorias']) ?></td>
+                            <td><?= hh($a['calorias']." kcl") ?></td>
                         </tr>
                     </tbody>
                 </table>
-                <?php } ?>
+                <?php endforeach ?>
                 </div>
                 <h3>Subir actividad</h3>
                 <a href="actividades/subir_actividad.php" class="anadir">+</a>
@@ -73,7 +76,8 @@ $ultimas_actividades = obtener_ultimas_actividades_usuario($pdo, $id);
                 <h2>Evolución</h2>
                 <a href="evolucion/ver_evolucion.php" class="anadir">?</a>
             </section>
-            <?php } ?>
+            <?php }
+            } ?>
     </main>
 </body>
 </html>

@@ -21,7 +21,7 @@
     --fondo-a-inicio: rgb(19, 189, 19);
     --fondo-a-eliminar-inicio: rgb(189, 19, 19);
     --fondo-opciones-inicio: linear-gradient(to top, #3838379e, #dad7d18c );
-    --fondo-th-actividad-inicio: yellow;
+    --fondo-th-actividad-inicio: rgb(142, 142, 58);
     --fondo-td-actividad-inicio: rgb(225, 225, 138);
 }
 
@@ -217,12 +217,42 @@ ESTILOS PARA ZONA DE INICIO
 #contenedor_actividades {
     display: flex;
     flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    padding: 20px;
 }
 
 /*Ficha de actividad */
+
+
+.actividad_inicio {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 20px;
+    width: 80%;
+    box-shadow: 2px 3px 3px 2px rgba(243, 240, 162, 0.816),
+                inset 2px 2px 0 4px rgba(249, 243, 62, 0.64);
+}
+
 .actividad_inicio th{
     color: var(--color-th-actividad-inicio);
     background-color: var(--fondo-th-actividad-inicio);
+    border-radius: 20px;
+    padding: 5px;
+}
+
+.actividad_inicio td {
+    color: var(--color-td-actividad-inicio);
+    border-radius: 20px;
+    padding: 5px;
+    font-weight: bold;
+}
+
+.actividad_inicio tbody tr {
+    display: flex;
+    justify-content: space-between;
 }
 
 
