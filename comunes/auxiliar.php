@@ -53,6 +53,11 @@ function comprobar_sesion() :void {
     }
 }
 
+function obtener_id_usuario(PDO $pdo, string $email): int {
+    $sent = $pdo->prepare('SELECT id FROM usuarios WHERE email = :email');
+    $sent->execute([':email' => $email]);
+    return (int) $sent->fetchColumn();
+}
 
 
 
@@ -169,7 +174,9 @@ function borrar_usuario(PDO $pdo, string $email)
 /*Panel de inicio */
 
 function obtener_correo_admin(PDO $pdo) {
-    $sent = $pdo->prepare("SELECT email FROM usuarios WHERE puesto like 'admin'");
+    $sent = $pdo->prepare("SELECT email 
+                            FROM usuarios 
+                            WHERE categoria_id = (SELECT id FROM categorias WHERE categoria = 'admin')");
     $sent->execute();
     return $sent->fetchColumn();
 }
@@ -181,12 +188,6 @@ function buscar_admin(PDO $pdo, string $email, string $password):bool {
         $hash = $sent->fetchColumn();
         return $hash !== false && password_verify($password, $hash);
     } return false;
-}
-
-function obtener_id_usuario(PDO $pdo, string $email): int {
-    $sent = $pdo->prepare('SELECT id FROM usuarios WHERE email = :email');
-    $sent->execute([':email' => $email]);
-    return (int) $sent->fetchColumn();
 }
 
 function obtener_ejercicios_usuario(PDO $pdo, int $id): array {
@@ -203,6 +204,31 @@ function obtener_ejercicios_usuario(PDO $pdo, int $id): array {
 }
 
 
+
+
+
+
+
+
+
+/*Panel de actividad */
+
+function obtener_actividades_usuario(PDO $pdo, string $id) : array
+{
+    $sent = $pdo->prepare('
+    SELECT 
+    u.nombre as nombre,
+    e.nombre as ejercicio, 
+    p.fecha as fecha,
+    p.calorias as calorias
+    FROM usuarios u join practicas p on p.usuario_id = u.id 
+                    join ejercicios e on e.id = p.ejercicio_id
+    WHERE u.id = :id
+    ORDER BY p.fecha DESC
+    ');
+    $sent->execute([':id' => $id]);
+    return $sent->fetchAll();
+}
 
 
 
@@ -231,7 +257,7 @@ function comprobar_usuario(PDO $pdo, string $email, string $password): bool {
 /*Panel de administración */
 
 function buscar_todos_los_usuarios(PDO $pdo) :array{
-    $sent = $pdo->prepare('SELECT * from usuarios');
+    $sent = $pdo->prepare('SELECT u.*, c.categoria FROM usuarios u JOIN categorias c ON c.id = u.categoria_id');
     $sent->execute();
     return $sent->fetchAll();
 }

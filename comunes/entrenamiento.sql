@@ -1,17 +1,24 @@
+
 DROP TABLE IF EXISTS ciclismo;
 DROP TABLE IF EXISTS practicas;
 DROP TABLE IF EXISTS usuarios;
+DROP TABLE IF EXISTS categorias;
 DROP TABLE IF EXISTS ejercicios;
+
+CREATE TABLE categorias (
+    id          BIGSERIAL       PRIMARY KEY,
+    categoria   VARCHAR(255)    NOT NULL UNIQUE
+);
 
 
 CREATE TABLE usuarios(
-    id          BIGSERIAL       PRIMARY KEY,
-    nombre      VARCHAR(255)    NOT NULL,
-    edad        NUMERIC(3)      NOT NULL,
-    peso        NUMERIC(8)      NOT NULL,
-    email       VARCHAR(255)    UNIQUE NOT NULL,
-    puesto      VARCHAR(255)    NOT NULL DEFAULT 'becario',
-    password    VARCHAR(255)    NOT NULL
+    id              BIGSERIAL       PRIMARY KEY,
+    nombre          VARCHAR(255)    NOT NULL,
+    edad            NUMERIC(3)      NOT NULL,
+    peso            NUMERIC(8)      NOT NULL,
+    email           VARCHAR(255)    UNIQUE NOT NULL,
+    categoria_id    BIGINT          NOT NULL DEFAULT 2 REFERENCES categorias(id),
+    password        VARCHAR(255)    NOT NULL
 );
 
 
@@ -40,15 +47,20 @@ CREATE TABLE ciclismo(
 
 
 /*Datos de prueba */
-INSERT INTO usuarios (nombre, edad, peso, email, puesto, password)
-VALUES ('Andrés', 20, 70.50, 'andres@donana.com', 'admin', crypt('1236', gen_salt('bf',12))),
-       ('Andrés', 20, 70.50, 'andres@correo.com', 'becario', crypt('1236', gen_salt('bf',12))),
-       ('Lucía', 25, 58.20, 'lucia@correo.com', 'becario', crypt('1236', gen_salt('bf',12))),
-       ('Carlos', 31, 82.40, 'carlos@correo.com', 'empleado', crypt('1236', gen_salt('bf',12))),
-       ('Marta', 28, 61.75, 'marta@correo.com', 'empleado', crypt('1236', gen_salt('bf',12))),
-       ('Javier', 22, 75.00, 'javier@correo.com', 'becario', crypt('1236', gen_salt('bf',12))),
-       ('Elena', 35, 64.30, 'elena@correo.com', 'empleado', crypt('1236', gen_salt('bf',12))),
-       ('Pablo', 19, 68.90, 'pablo@correo.com', 'becario', crypt('1236', gen_salt('bf',12)));
+INSERT INTO categorias (categoria)
+VALUES ('admin'),
+       ('usuario'),
+       ('usuario_premium');
+
+INSERT INTO usuarios (nombre, edad, peso, email, categoria_id, password)
+VALUES ('Andrés', 20, 70.50, 'andres@donana.com', 1, crypt('1236', gen_salt('bf',12))),
+       ('Andrés', 20, 70.50, 'andres@correo.com', 2, crypt('1236', gen_salt('bf',12))),
+       ('Lucía', 25, 58.20, 'lucia@correo.com', 2, crypt('1236', gen_salt('bf',12))),
+       ('Carlos', 31, 82.40, 'carlos@correo.com', 3, crypt('1236', gen_salt('bf',12))),
+       ('Marta', 28, 61.75, 'marta@correo.com', 3, crypt('1236', gen_salt('bf',12))),
+       ('Javier', 22, 75.00, 'javier@correo.com', 2, crypt('1236', gen_salt('bf',12))),
+       ('Elena', 35, 64.30, 'elena@correo.com', 3, crypt('1236', gen_salt('bf',12))),
+       ('Pablo', 19, 68.90, 'pablo@correo.com', 2, crypt('1236', gen_salt('bf',12)));
 
 INSERT INTO ejercicios (nombre)
 VALUES ('ciclismo'),
@@ -59,6 +71,7 @@ VALUES ('ciclismo'),
 
 INSERT INTO practicas (fecha, calorias, usuario_id, ejercicio_id)
 VALUES (DEFAULT,      450, 2, 1),
+       (DEFAULT,      450, 2, 1),
        ('2026-10-20', 380, 1, 1),
        ('2026-10-21', 520, 3, 1),
        ('2026-10-22', 300, 2, 2),

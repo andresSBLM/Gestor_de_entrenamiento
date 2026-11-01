@@ -25,7 +25,7 @@ $filas = buscar_todos_los_usuarios($pdo);
                 <th>Edad</th>
                 <th>Peso</th>
                 <th>Email</th>
-                <th>Puesto</th>
+                <th>Categoría</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -37,8 +37,8 @@ $filas = buscar_todos_los_usuarios($pdo);
                 <td><?= $fila['edad'] ?></td>
                 <td><?= $fila['peso'] ?></td>
                 <td><?= $fila['email'] ?></td>
-                <td><?= $fila['puesto']?></td>
-                <?php if ($fila['puesto'] !== 'admin') {
+                <td><?= $fila['categoria'] ?></td>
+                <?php if ($fila['categoria'] !== 'admin') {
                     ?><td><button type="submit">Borrar</button></td>
                 <?php } ?>
                 <input type="hidden" name="email" id="email" value="<?= $fila['email'] ?>"  >
