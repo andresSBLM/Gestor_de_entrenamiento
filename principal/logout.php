@@ -1,5 +1,5 @@
 <?php 
-require 'auxiliar.php';
+require '../comunes/auxiliar.php';
 session_start();
 
 $email = $_SESSION['login'];
@@ -10,5 +10,5 @@ borrar_usuario($pdo, $email );
 
 $_SESSION = [];
 
-mover_a('/entrada/index.php');
+mover_a('../index.php');
 

@@ -1,6 +1,6 @@
 <?php 
 
-require '../auxiliar.php';
+require 'comunes/auxiliar.php';
 
 session_start();
 
@@ -38,7 +38,7 @@ if (!isset($_SESSION['login']))
             $password_encriptada = password_crip($password);
             $campos = compact('nombre', 'edad', 'peso', 'email', 'password_encriptada');
             insertar_usuario($pdo, $campos);
-            mover_a('/entrada/inicio.php');
+            mover_a('../principal/inicio.php');
         }
     }
 
@@ -52,7 +52,7 @@ if (!isset($_SESSION['login']))
 </head>
 <body>
     <h1>Campo de Registro</h1>
-    <form action="/entrada/index.php" method="post">
+    <form action="index.php" method="post">
         <label>
             Nombre:
             <input type="text" id="nombre" name="nombre" value="<?= hh($nombre) ?>"><br>
@@ -115,14 +115,14 @@ if (!isset($_SESSION['login']))
         </label>
         <button type="submit">Iniciar sesión</button>
     </form>
-    <a href="/entrada/acceder.php">Entrar</a>
+    <a href="entrada/acceder.php">Entrar</a>
 </body>
 </html>
 
 <?php 
 
 } else {
-    cabecera();
+    cabecera($_SERVER['login'] ?? '');
 }
 
 ?>

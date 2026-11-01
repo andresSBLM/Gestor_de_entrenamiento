@@ -1,6 +1,6 @@
 <?php 
 
-require '../auxiliar.php';
+require '../comunes/auxiliar.php';
 
 session_start();
 $email = '';
@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (comprobar_usuario($pdo, $email, $password)) {
         $_SESSION['login'] = $email;
-        mover_a('inicio.php');
+        mover_a('../principal/inicio.php');
     }
 }
 ?>
@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <input type="password" id="password" name="password">
         </label>
         <button type="submit">Enviar</button>
-        <a href="/entrada/index.php">Volver</a>
+        <a href="../index.php">Volver</a>
     </form>
 </body>
 </html>

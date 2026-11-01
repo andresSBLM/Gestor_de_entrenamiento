@@ -2,9 +2,9 @@
 
 session_start();
 
-require '../auxiliar.php';
+require '../comunes/auxiliar.php';
 $pdo = conectar();
-cabecera();
+cabecera($_SESSION['login']);
 
 ?>
 

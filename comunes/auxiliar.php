@@ -16,12 +16,19 @@ function hh(string $str) : string
     return htmlspecialchars($str);
 }
 
-function cabecera() {
+function cabecera($email):void {
+    
+    if ($email !== obtener_correo_admin(conectar())) {
     ?>
-    <a href="perfil.php">Perfil</a>
-    <a href="actividad.php">Actividad</a>
-    <a href="../logout.php">Logout</a>
+        <a href="../principal/perfil.php">Perfil</a>
+        <a href="../principal/actividad.php">Actividad</a>
+        <a href="../principal/logout.php">Logout</a>
     <?php
+    } else {
+        ?>
+        <a href="../principal/perfil.php">Perfil</a>
+        <a href="../principal/actividad.php">Actividad</a>
+   <?php }
 }
 
 function password_crip(string $password) :string {
