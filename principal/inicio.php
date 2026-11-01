@@ -4,7 +4,7 @@ session_start();
 
 require '../comunes/auxiliar.php';
 $pdo = conectar();
-cabecera($_SESSION['login']);
+opciones($_SESSION['login']);
 
 comprobar_sesion();
 
@@ -16,6 +16,7 @@ comprobar_sesion();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página de inicio.</title>
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
     <h1>Panel principal</h1>

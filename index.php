@@ -122,7 +122,7 @@ if (!isset($_SESSION['login']))
 <?php 
 
 } else {
-    cabecera($_SERVER['login'] ?? '');
+    mover_a('../principal/inicio.php');
 }
 
 ?>
