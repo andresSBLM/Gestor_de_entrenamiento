@@ -183,6 +183,34 @@ function buscar_admin(PDO $pdo, string $email, string $password):bool {
     } return false;
 }
 
+function obtener_id_usuario(PDO $pdo, string $email): int {
+    $sent = $pdo->prepare('SELECT id FROM usuarios WHERE email = :email');
+    $sent->execute([':email' => $email]);
+    return (int) $sent->fetchColumn();
+}
+
+function obtener_ejercicios_usuario(PDO $pdo, int $id): array {
+    $sent = $pdo->prepare('
+        SELECT e.nombre AS ejercicio
+        FROM practicas p
+        JOIN ejercicios e    ON e.id = p.ejercicio_id
+        LEFT JOIN ciclismo c ON c.practica_id = p.id
+        WHERE p.usuario_id = :id
+        ORDER BY p.fecha DESC
+    ');
+    $sent->execute([':id' => $id]);
+    return $sent->fetchAll();
+}
+
+
+
+
+
+
+
+
+
+
 /*Panel de acceder */
 
 function comprobar_usuario(PDO $pdo, string $email, string $password): bool {
