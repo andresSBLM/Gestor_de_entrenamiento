@@ -145,7 +145,7 @@ function convertir_peso(string $peso, &$peso_nuevo, string $unidad_peso, array &
     } elseif (($peso >= 500000 && $unidad_peso == 'g') || ($peso <= 5000 && $unidad_peso == 'g')) {
         $errores['peso'][] = 'El peso no entra en el rango humano';
     }
-    if ($unidad_peso == 'kg') {
+    if ($unidad_peso == 'kg' && $peso != '') {
         $peso_nuevo *= 1000;
     }
 }
