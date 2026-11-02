@@ -57,7 +57,8 @@ $actividades = obtener_actividades_usuario($pdo, $id);
                         ?>
                         <h3 class="mensaje">No hay Actividades registradas</h3>
                     <?php } else {
-                        for ($x = 0; $x < 5; $x += 1):
+                        $limite = (count($actividades) < 5) ? count($actividades) :5;
+                        for ($x = 0; $x < $limite; $x += 1):
                             $a = $actividades[$x];
                             ?>
 

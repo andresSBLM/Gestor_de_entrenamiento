@@ -3,6 +3,7 @@
 session_start();
 
 require '../comunes/auxiliar.php';
+comprobar_sesion();
 $pdo = conectar();
 $email = obtener_email();
 $id = obtener_id_usuario($pdo, $email);

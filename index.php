@@ -21,7 +21,6 @@ if (!isset($_SESSION['login']))
         $apellidos = obtener_post('apellidos');
         $edad = obtener_post('edad');
         $peso = obtener_post('peso');
-        $unidad_peso = obtener_post('unidad_peso');
         $email = obtener_post('email');
         $password = obtener_post('password');
         $confirm_password = obtener_post('confirm_password');
@@ -29,8 +28,7 @@ if (!isset($_SESSION['login']))
         validar_nombre($nombre, $errores);
         validar_apellidos($apellidos, $errores);
         validar_edad($edad, $errores);
-        $peso_nuevo = $peso;
-        convertir_peso($peso, $peso_nuevo, $unidad_peso, $errores);
+        convertir_peso($peso, $errores);
         validar_email($email, $errores);
         validar_password($password, $errores);
         comparar_password($password, $confirm_password, $errores);
@@ -40,7 +38,7 @@ if (!isset($_SESSION['login']))
         if (empty($errores)) {
             $_SESSION ['login'] = $email;
             $password_encriptada = password_crip($password);
-            $campos = compact('nombre', 'apellidos', 'edad', 'peso_nuevo', 'email', 'password_encriptada');
+            $campos = compact('nombre', 'apellidos', 'edad', 'peso', 'email', 'password_encriptada');
             insertar_usuario($pdo, $campos);
             mover_a('../principal/inicio.php');
         }
@@ -89,10 +87,7 @@ if (!isset($_SESSION['login']))
         <label>
             Peso:
             <input type="number" id="peso" step="0.01" name="peso" value="<?= hh($peso) ?>">
-            <select name="unidad_peso" id="unidad_peso">
-                <option value="kg">Kilogramos</option>
-                <option value="g">Gramos</option>
-            </select>
+            <label>Kilogramos</label>
             <br>
             <ul>
                 <?php foreach($errores['peso'] ?? [] as $error) {

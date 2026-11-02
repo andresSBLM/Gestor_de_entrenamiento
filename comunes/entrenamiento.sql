@@ -16,7 +16,7 @@ CREATE TABLE usuarios(
     nombre          VARCHAR(255)    NOT NULL,
     apellidos       VARCHAR(255)    NOT NULL,
     edad            NUMERIC(3)      NOT NULL,
-    peso            NUMERIC(8)      NOT NULL,
+    peso            NUMERIC(5,2)    NOT NULL,
     email           VARCHAR(255)    UNIQUE NOT NULL,
     categoria_id    BIGINT          NOT NULL DEFAULT 2 REFERENCES categorias(id),
     password        VARCHAR(255)    NOT NULL
@@ -55,14 +55,14 @@ VALUES ('admin'),
        ('usuario_premium');
 
 INSERT INTO usuarios (nombre, apellidos, edad, peso, email, categoria_id, password)
-VALUES ('Andrés', 'Jimenez',20, 70000.50, 'andres@donana.com', 1, crypt('1236', gen_salt('bf',12))),
-       ('Andrés', 'Jimenez',20, 70000.50, 'andres@correo.com', 2, crypt('1236', gen_salt('bf',12))),
-       ('Lucía','Jimenez', 25, 58000.20, 'lucia@correo.com', 2, crypt('1236', gen_salt('bf',12))),
-       ('Carlos','Jimenez', 31, 80020.40, 'carlos@correo.com', 3, crypt('1236', gen_salt('bf',12))),
-       ('Marta','Jimenez', 28, 61000.75, 'marta@correo.com', 3, crypt('1236', gen_salt('bf',12))),
-       ('Javier','Jimenez', 22, 7500.00, 'javier@correo.com', 2, crypt('1236', gen_salt('bf',12))),
-       ('Elena', 'Jimenez',35, 64000.30, 'elena@correo.com', 3, crypt('1236', gen_salt('bf',12))),
-       ('Pablo', 'Jimenez',19, 68000.90, 'pablo@correo.com', 2, crypt('1236', gen_salt('bf',12)));
+VALUES ('Andrés', 'Jimenez',20, 70, 'andres@donana.com', 1, crypt('1236', gen_salt('bf',12))),
+       ('Andrés', 'Jimenez',20, 70, 'andres@correo.com', 2, crypt('1236', gen_salt('bf',12))),
+       ('Lucía','Jimenez', 25, 58.45, 'lucia@correo.com', 2, crypt('1236', gen_salt('bf',12))),
+       ('Carlos','Jimenez', 31, 80.40, 'carlos@correo.com', 3, crypt('1236', gen_salt('bf',12))),
+       ('Marta','Jimenez', 28, 61.75, 'marta@correo.com', 3, crypt('1236', gen_salt('bf',12))),
+       ('Javier','Jimenez', 22, 75.00, 'javier@correo.com', 2, crypt('1236', gen_salt('bf',12))),
+       ('Elena', 'Jimenez',35, 64.30, 'elena@correo.com', 3, crypt('1236', gen_salt('bf',12))),
+       ('Pablo', 'Jimenez',19, 68.90, 'pablo@correo.com', 2, crypt('1236', gen_salt('bf',12)));
 
 INSERT INTO ejercicios (nombre)
 VALUES ('ciclismo'),

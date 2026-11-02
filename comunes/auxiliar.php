@@ -79,15 +79,18 @@ function obtener_actividades_usuario(PDO $pdo, string $id) : array
     return $sent->fetchAll();
 }
 
-
-function obtener_email() {
+/*Devuelve el email de la sesión actual */
+function obtener_email() : string{
     return $_SESSION['login'];
 }
 
 
 
-
-
+function todo_sobre_usuario(PDO $pdo, string $email) {
+    $sent = $pdo->prepare('SELECT * FROM usuarios WHERE email = :email');
+    $sent->execute([':email'=> $email]);
+    return $sent->fetch();
+}
 
 
 
@@ -134,19 +137,14 @@ function validar_edad(string $edad, &$errores) :void
     }
 }
 
-function convertir_peso(string $peso, &$peso_nuevo, string $unidad_peso, array &$errores) :void
+function convertir_peso(string $peso, array &$errores) :void
 {
     if($peso == '') {
         $errores['peso'][] = 'El peso está vacío';
     } elseif (!filter_var($peso, FILTER_VALIDATE_FLOAT)) {
         $errores['peso'][] = 'El peso debe de ser un número entero o decimal';
-    }  elseif (($peso >= 500 && $unidad_peso == 'kg') || ($peso <= 5 && $unidad_peso == 'kg')) {
+    }  elseif ($peso >= 500 || $peso <= 5 ) {
         $errores['peso'][] = 'El peso no entra en el rango humano';
-    } elseif (($peso >= 500000 && $unidad_peso == 'g') || ($peso <= 5000 && $unidad_peso == 'g')) {
-        $errores['peso'][] = 'El peso no entra en el rango humano';
-    }
-    if ($unidad_peso == 'kg' && $peso != '') {
-        $peso_nuevo *= 1000;
     }
 }
 
@@ -193,7 +191,7 @@ function insertar_usuario(PDO $pdo, array $campos): void {
         ':nombre' => $nombre,
         ':apellidos' => $apellidos,
         ':edad' => $edad,
-        ':peso' => $peso_nuevo,
+        ':peso' => $peso,
         ':email' => $email,
         ':password' => $password_encriptada
     ]);
@@ -342,6 +340,47 @@ function datos_usuario(PDO $pdo, string $email):array {
     $sent->execute([':email'=> $email]);
     return $sent->fetch();
 }
+
+
+
+
+
+
+/*Panel de modificar_perfil */
+
+function comprobar_email(PDO $pdo, string $email, string $email_propio, array &$errores): void {
+    $sent = $pdo->prepare('SELECT 1 FROM usuarios WHERE (email ilike :email AND email != :email_propio)');
+    $sent->execute([':email'=> $email, ':email_propio'=> $email_propio]);
+    if ($sent->fetch() !== false) {
+        $errores['email'] = 'No se puede utilizar este email';
+    }
+}
+
+
+
+function modificar_usuario(PDO $pdo,  string $id, array $campos) :void {
+    extract($campos);
+    $sent = $pdo->prepare('
+    UPDATE usuarios
+        SET nombre = :nombre,
+            apellidos = :apellidos,
+            edad = :edad,
+            peso = :peso,
+            email = :email
+        WHERE id = :id;
+    ');
+    $sent->execute([
+        ':nombre'=> $nombre,
+        ':apellidos' => $apellidos,
+        ':edad' => $edad,
+        ':peso' => $peso,
+        ':email' => $email,
+        ':id' => $id
+    ]);
+}
+
+
+
 
 
 

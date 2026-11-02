@@ -3,9 +3,12 @@ session_start();
 
 require '../comunes/auxiliar.php';
 
+comprobar_sesion();
 $email = obtener_email();
 $pdo = conectar();
 $campos = datos_usuario($pdo, $email);
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,9 +25,10 @@ $campos = datos_usuario($pdo, $email);
     <main>
         <h2><?= hh($campos['nombre'])." ".hh($campos['apellidos']) ?></h2>
         <p><?= hh($campos['edad'])." años." ?></p>
-        <p><?= (hh($campos['peso'])/1000)." Kilogramos." ?></p>
+        <p><?= hh($campos['peso'])." Kilogramos." ?></p>
         <p><?= hh($campos['email']) ?></p>
         <p><?= "Categoria: ".hh($campos['categoria']) ?></p>
+        <a href="modificar_perfil.php">Modificar perfil</a><br>
         <a href="../principal/inicio.php">Volver</a>
     </main>
 </body>
