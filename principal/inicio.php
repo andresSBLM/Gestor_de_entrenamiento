@@ -101,7 +101,9 @@ $actividades = obtener_actividades_usuario($pdo, $id);
                         <h3>Última actividad de <?= $mes_anterior ?></h3>
                         <div class="contenedor_progreso">
                             <?php for ($x = 1; $x <= $dias_anterior; $x++): ?>
-                                <?php $fecha = $ano_mes_anterior . '-' . sprintf('%02d', $x); ?>
+                                <?php 
+                                $num_dia = ($x < 10)? "0$x" : $x;
+                                $fecha = $ano_mes_anterior . '-' . $num_dia; ?>
                                 <button class="celda <?= in_array($fecha, $fechas_usuario) ? 'dia_si' : 'dia_no' ?>"
                                     disabled></button>
                             <?php endfor; ?>
@@ -110,7 +112,9 @@ $actividades = obtener_actividades_usuario($pdo, $id);
                         <h3>Última actividad de <?= $mes_actual ?></h3>
                         <div class="contenedor_progreso">
                             <?php for ($x = 1; $x <= $dias_actual; $x++): ?>
-                                <?php $fecha = $ano_mes_actual . '-' . sprintf('%02d', $x); ?>
+                                <?php 
+                                $num_dia = ($x < 10)? "0$x" : $x;
+                                $fecha = $ano_mes_actual . '-' . $num_dia; ?>
                                 <button class="celda <?= in_array($fecha, $fechas_usuario) ? 'dia_si' : 'dia_no' ?>"
                                     disabled></button>
                             <?php endfor; ?>

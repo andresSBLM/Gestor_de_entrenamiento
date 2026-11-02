@@ -13,6 +13,7 @@
     --color-a-inicio: rgb(255, 255, 255);
     --color-th-actividad-inicio: white;
     --color-td-actividad-inicio: rgb(136, 96, 31);
+    --color-h3-evolucion-inicio: rgb(136, 96, 31);
 
     --fondo-opciones: linear-gradient(to top, #3838379e, #dad7d18c );
     --fondo-body-inicio: repeating-linear-gradient(to bottom, #8e763a 80px, #f5d994 160px);
@@ -277,6 +278,14 @@ ESTILOS PARA ZONA DE INICIO
 #contenedor_contenedor_progreso {
     display: flex;
     flex-direction: column;
+    gap: 20px;
+}
+
+#contenedor_contenedor_progreso h3 {
+    color: var(--color-h3-evolucion-inicio);
+    font-weight: bold;
+    font-size: 1.5rem;
+    text-shadow: 2px 2px 2px white;
 }
 
 .contenedor_progreso {
