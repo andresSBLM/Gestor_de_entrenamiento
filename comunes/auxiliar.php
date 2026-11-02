@@ -253,6 +253,73 @@ function obtener_ejercicios_usuario(PDO $pdo, int $id): array {
 
 
 
+/*Panel de evolución */
+
+function obtener_mes_anterior():string {
+    $meses = ['', 'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio',
+          'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+    $mes = (int) date('n') - 1;
+    if ($mes === 0) {
+        $mes = 12;
+    }
+    return $meses[$mes];
+}
+
+function obtener_dias_mes_anterior():string {
+    return (int) (new DateTime('first day of last month'))->format('t');
+}
+
+function obtener_mes_actual():string {
+    $meses = ['', 'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio',
+          'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+    $mes = $meses[(int) date('n')];
+    return $mes;
+}
+
+function obtener_dias_mes_actual():string {
+    return date('t');
+}  
+
+function obtener_fecha_actual():string {
+    return date('Y-m-d');
+}
+
+function obtener_fecha_inicio(): string {
+    $a = new DateTime('first day of last month');
+    $b = $a->format('Y-m-d');
+    return $b;
+}
+
+function obtener_ano_mes_actual():string {
+    return date('Y-m');
+}
+
+function obtener_ano_mes_anterior() :string{
+    $f = new DateTime('first day of last month');
+
+    return $f->format('Y-m');
+}
+
+function obtener_fechas_usuario(PDO $pdo, int $id, string $fecha_inicio, string $fecha_actual): array {
+    $sent = $pdo->prepare('
+    SELECT DISTINCT
+        p.fecha as fecha
+    FROM usuarios u join practicas p on u.id = p.usuario_id
+    WHERE u.id = :id and fecha BETWEEN :fecha_inicio and :fecha_actual;
+    ');
+    $sent->execute([
+        ':id'=> $id,
+        ':fecha_inicio' => $fecha_inicio,
+        ':fecha_actual'=> $fecha_actual
+        ]);
+    return $sent->fetchAll(PDO::FETCH_COLUMN);
+}
+
+
+
+
+
+
 
 
 

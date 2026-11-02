@@ -273,6 +273,32 @@ ESTILOS PARA ZONA DE INICIO
     padding-bottom: 20px;
 }
 
+#contenedor_contenedor_progreso {
+    display: flex;
+    flex-direction: column;
+}
+
+.contenedor_progreso {
+    display: grid;
+    gap: 5px;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(5, 40px);
+    margin: 0 20px 0 20px;
+}
+
+.contenedor_progreso button {
+    border-radius: 10px;
+    border: none;
+}
+
+.dia_si {
+    background-color: green;
+}
+
+.dia_no {
+    background-color: rgba(175, 172, 172, 0.83);
+}
+
 
 
 /*
