@@ -138,6 +138,7 @@ if (empty($filas)) {
                 </label>
                 <button type="submit">Modificar</button>
             </form>
+            <a href="cambiar_password.php">Cambiar de contraseña.</a><br>
             <a href="perfil.php">Volver</a>
         </main>
     </body>

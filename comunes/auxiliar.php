@@ -380,11 +380,21 @@ function modificar_usuario(PDO $pdo,  string $id, array $campos) :void {
 }
 
 
+/*Panel cambiar password */
+
+function obtener_password_usuario(PDO $pdo, string $email): array {
+    $sent = $pdo->prepare('SELECT password FROM usuarios WHERE email = :email');
+    $sent->execute([':email'=> $email]);
+    return $sent->fetch();
+}
 
 
-
-
-
+function cambiar_password_usuario(PDO $pdo, string $email, string $password) {
+    $sent = $pdo->prepare('UPDATE usuarios 
+                            SET password = :password
+                            WHERE email = :email');
+    $sent->execute([':email'=> $email,':password'=> $password]);
+}
 
 
 
