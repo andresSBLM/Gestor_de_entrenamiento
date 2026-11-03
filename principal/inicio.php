@@ -13,6 +13,18 @@ $email = obtener_email();
 $id = obtener_id_usuario($pdo, $email);
 $ejercicios = obtener_ejercicios_usuario($pdo, $id);
 $actividades = obtener_actividades_usuario($pdo, $id);
+$id_actividad = '';
+$permiso = '';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $id_actividad = obtener_post('id_actividad');
+    if ($id_actividad) {
+        borrar_actividad($pdo, $id_actividad);
+        mover_a('inicio.php');
+    }
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -61,7 +73,7 @@ $actividades = obtener_actividades_usuario($pdo, $id);
                         for ($x = 0; $x < $limite; $x += 1):
                             $a = $actividades[$x];
                             ?>
-
+                            <form id="actividades" action="inicio.php" method="post">
                             <table class="actividad_inicio">
                                 <thead>
                                     <tr>
@@ -73,14 +85,18 @@ $actividades = obtener_actividades_usuario($pdo, $id);
                                         <td><?= hh($a['ejercicio']) ?></td>
                                         <td><?= hh($a['fecha']) ?></td>
                                         <td><?= hh($a['calorias'] . " kcl") ?></td>
+                                        <input type="hidden" class="id_actividad" name="id_actividad" value="<?= hh($a['id']) ?>">
                                     </tr>
                                 </tbody>
                             </table>
+                            <button type="submit" class="borrar_actividad"></button>
+                            </form> 
                         <?php endfor;
                     } ?>
+                    <form id="contenedor_opciones_actividades_inicio" action="actividades/subir_actividad.php" method="post">
+                        <button id='anadir' class="anadir">+</button>
+                    </form>
                 </div>
-                <a href="actividades/subir_actividad.php" class="anadir">+</a>
-                <a href="actividades/eliminar_actividad.php" class="eliminar">-</a>
             </section>
             <section id="evolucion_inicio">
                 <h2>Evolución</h2>
@@ -121,12 +137,26 @@ $actividades = obtener_actividades_usuario($pdo, $id);
                             <?php endfor; ?>
                         </div>
                     </div>
-                    <a href="evolucion/ver_evolucion.php" class="anadir">?</a>
+                    <div id="contenedor_opciones_evolucion_inicio">
+                        <a href="evolucion/ver_evolucion.php" class="anadir ver">?</a>
+                    </div>
                 <?php } ?>
             </section>
             <?php
         } ?>
     </main>
+    <script>
+    const contenedor = document.getElementById("contenedor_actividades");
+
+    contenedor?.addEventListener("click", (e) => {
+    const tabla = e.target.closest(".actividad_inicio");
+    if (tabla) {
+        const input = tabla.querySelector(".id_actividad");
+        const id_actividad = input ? input.value : '';
+        window.location.href = `actividades/modificar_actividad.php?id_actividad=${id_actividad}`;
+    }
+    });
+</script>
 </body>
 
 </html>

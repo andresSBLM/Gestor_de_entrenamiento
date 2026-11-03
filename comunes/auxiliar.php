@@ -65,6 +65,7 @@ function obtener_actividades_usuario(PDO $pdo, string $id) : array
 {
     $sent = $pdo->prepare('
     SELECT 
+    p.id as id,
     u.nombre as nombre,
     p.titulo as titulo,
     e.nombre as ejercicio, 
@@ -235,7 +236,6 @@ function obtener_ejercicios_usuario(PDO $pdo, int $id): array {
         SELECT DISTINCT e.nombre AS ejercicio
         FROM practicas p
         JOIN ejercicios e    ON e.id = p.ejercicio_id
-        LEFT JOIN ciclismo c ON c.practica_id = p.id
         WHERE p.usuario_id = :id
         ORDER BY e.nombre
     ');
@@ -396,6 +396,22 @@ function cambiar_password_usuario(PDO $pdo, string $email, string $password) {
     $sent->execute([':email'=> $email,':password'=> $password]);
 }
 
+
+
+
+
+
+
+
+
+
+
+/*Panel de actividades */
+
+function borrar_actividad(PDO $pdo, string $id_actividad):void {
+    $sent = $pdo->prepare('DELETE FROM practicas WHERE id = :id');
+    $sent->execute(['id'=> $id_actividad]);
+}
 
 
 

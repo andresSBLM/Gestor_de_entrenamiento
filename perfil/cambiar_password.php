@@ -61,12 +61,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </label>
             <ul>
                     <?php foreach ($errores['password'] ?? [] as $error): ?>
-                    <li><?= $error?></li> 
+                    <li><?= $error?></li>
                     <?php endforeach; ?> 
             </ul>
             <br>
             <button type="submit">Cambiar contraseña</button><br>
-            <a href="modificar_perfil.php">Volver</a>
+            <a href="modificar_perfil.php">Volver</a> <br>
+            <a href="../principal/inicio.php">Volver a inicio</a>
         </form>
     </main>
 </body>

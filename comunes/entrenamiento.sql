@@ -1,5 +1,3 @@
-
-DROP TABLE IF EXISTS ciclismo;
 DROP TABLE IF EXISTS practicas;
 DROP TABLE IF EXISTS usuarios;
 DROP TABLE IF EXISTS categorias;
@@ -22,7 +20,6 @@ CREATE TABLE usuarios(
     password        VARCHAR(255)    NOT NULL
 );
 
-
 CREATE TABLE ejercicios(
     id          BIGSERIAL       PRIMARY KEY,
     nombre      VARCHAR(255)    NOT NULL UNIQUE
@@ -32,19 +29,16 @@ CREATE TABLE practicas(
     id              BIGSERIAL       PRIMARY KEY,
     titulo          VARCHAR(255)    NOT NULL DEFAULT 'Actividad',
     fecha           DATE            NOT NULL DEFAULT CURRENT_DATE,
-    calorias        INTEGER         NOT NULL,      
+    calorias        INTEGER         NOT NULL,
+    distancia       INTEGER         ,
+    tiempo          INTEGER         ,
+    velocidad       INTEGER         ,      
     usuario_id      BIGINT          NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
     ejercicio_id    BIGINT          NOT NULL REFERENCES ejercicios(id)
 );
 
 
-CREATE TABLE ciclismo(
-    id          BIGSERIAL       PRIMARY KEY,
-    distancia   INTEGER         NOT NULL,
-    tiempo      INTEGER         NOT NULL,
-    velocidad   NUMERIC(6,2)    NOT NULL,
-    practica_id BIGINT          NOT NULL UNIQUE REFERENCES practicas(id) ON DELETE CASCADE
-);
+
 
 
 
@@ -71,9 +65,7 @@ VALUES ('ciclismo'),
        ('pesas');
 
 INSERT INTO practicas (fecha, calorias, usuario_id, ejercicio_id)
-VALUES (DEFAULT,      450, 2, 1),
-       (DEFAULT,      450, 2, 1),
-       ('2026-10-20', 380, 1, 1),
+VALUES ('2026-10-20', 380, 1, 1),
        ('2026-10-21', 520, 3, 1),
        ('2026-10-22', 300, 2, 2),
        ('2026-10-22', 410, 4, 3),
@@ -90,15 +82,5 @@ VALUES (DEFAULT,      450, 2, 1),
        ('2026-10-31', 390, 7, 4),
        ('2026-11-01', 510, 2, 2),
        ('2026-11-02', 430, 2, 2),
-       ('2026-11-03', 580, 2, 1),
        ('2026-10-01', 566, 2, 1)       
        ;
-
-INSERT INTO ciclismo (distancia, tiempo, velocidad, practica_id)
-VALUES (25, 60,   25, 1),
-       (18, 3600, 18, 2),
-       (30, 4500, 24, 3),
-       (45, 5400, 30, 6),
-       (60, 7200, 30, 10),
-       (36, 5400, 24, 12),
-       (50, 7200, 25, 15);
