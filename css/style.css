@@ -262,6 +262,10 @@ ESTILOS PARA ZONA DE INICIO
     margin-top: 50px;
 }
 
+
+
+
+
 /*Padre de las fichas de actividades*/
 #actividades {
     display: grid;
@@ -270,6 +274,10 @@ ESTILOS PARA ZONA DE INICIO
     gap: 15px;
     width: 90%;
 }
+
+
+
+
 
 
 
@@ -305,6 +313,15 @@ ESTILOS PARA ZONA DE INICIO
     display: flex;
     justify-content: space-between;
 }
+
+/*Panel de añadir actividad */
+
+
+
+
+
+
+
 
 
 /*Section de evolución */

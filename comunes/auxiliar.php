@@ -414,6 +414,37 @@ function borrar_actividad(PDO $pdo, string $id_actividad):void {
 }
 
 
+function todos_los_ejercicios(PDO $pdo) :array {
+    $sent = $pdo->prepare('SELECT * FROM ejercicios');
+    $sent->execute();
+    return $sent->fetchAll();
+}
+
+function conseguir_atributos_ejercicio(string $ejercicio) :array {
+    switch ($ejercicio) {
+        case 'dominada':
+        case 'remo':
+        case 'flexiones':
+        case 'flexiones declinadas':
+        case 'flexiones en pica':   
+        case 'abdominales':
+        case 'abdominales en caida':
+        case 'abdominales en barra':
+            return ['Repeticiones', 'Series', 'Descanso entre series (segundos)'];
+        case 'sentadillas':
+        case 'sentadillas a 1 pie':
+        case 'pesas':
+            return ['Repeticiones', 'Series', 'Peso (Kg)', 'Descanso entre series (segundos)'];
+        case 'ciclismo':
+            return ['Distancia (Km)', 'Tiempo (min)', 'Pausas'];
+        case 'atletismo':
+            return ['Distancia (Km)', "Series", "Duracion (min)"];
+        default :
+            return [];
+    };
+}
+
+
 
 
 
@@ -442,7 +473,13 @@ function comprobar_usuario(PDO $pdo, string $email, string $password): bool {
 /*Panel de administración */
 
 function buscar_todos_los_usuarios(PDO $pdo) :array{
-    $sent = $pdo->prepare('SELECT u.*, c.categoria FROM usuarios u JOIN categorias c ON c.id = u.categoria_id');
+    $sent = $pdo->prepare('
+    SELECT 
+        u.*, 
+        c.categoria
+    FROM usuarios u JOIN categorias c ON c.id = u.categoria_id'
+                    
+    );
     $sent->execute();
     return $sent->fetchAll();
 }

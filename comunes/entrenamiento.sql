@@ -59,10 +59,19 @@ VALUES ('Andrés', 'Jimenez',20, 70, 'andres@donana.com', 1, crypt('1236', gen_s
        ('Pablo', 'Jimenez',19, 68.90, 'pablo@correo.com', 2, crypt('1236', gen_salt('bf',12)));
 
 INSERT INTO ejercicios (nombre)
-VALUES ('ciclismo'),
-       ('atletismo'),
-       ('natacion'),
-       ('pesas');
+VALUES ('sentadillas'),
+       ('sentadillas a 1 pie'),
+       ('flexiones'),
+       ('flexiones declinadas'),
+       ('flexiones en pica'),
+       ('abdominales'),
+       ('abdominales en caida'),
+       ('abdominales en barra'),
+       ('remo'),
+       ('dominada'),
+       ('pesas'),
+       ('ciclismo'),
+       ('atletismo');
 
 INSERT INTO practicas (fecha, calorias, usuario_id, ejercicio_id)
 VALUES ('2026-10-20', 380, 1, 1),
